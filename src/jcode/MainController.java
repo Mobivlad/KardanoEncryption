@@ -88,8 +88,19 @@ public class MainController {
     }
 
     @FXML
-    void onAboutMenuButton(){
-
+    void onAboutMenuButton() throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/fxml/about.fxml"));
+        Parent root = fxmlLoader.load();
+        for (String x: new String[]{"16","32","64","128","256","512"}) {
+            stage.getIcons().add(new Image(pathStartIcon+x+".png"));
+        }
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setOpacity(1);
+        stage.setResizable(false);
+        stage.setTitle("About");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
     }
 
     @FXML
