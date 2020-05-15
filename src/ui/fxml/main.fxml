@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="455.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jcode.MainController">
+    <MenuBar VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#onNewStencilButton" text="New stencil">
+            <accelerator>
+               <KeyCodeCombination alt="UP" code="N" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator></MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#onStencilChooseButton" text="Select stencil">
+            <accelerator>
+               <KeyCodeCombination alt="UP" code="S" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator></MenuItem>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#onEncryptMenuButton" text="Encrypt file">
+            <accelerator>
+               <KeyCodeCombination alt="UP" code="E" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator></MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#onDecryptMenuButton" text="Decrypt file">
+            <accelerator>
+               <KeyCodeCombination alt="UP" code="D" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator></MenuItem>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#onQuitMenuButton" text="Quit">
+            <accelerator>
+               <KeyCodeCombination alt="UP" code="Q" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator></MenuItem>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+            <Menu mnemonicParsing="false" text="Stencil direction">
+                <RadioMenuItem fx:id="hMenuButton" mnemonicParsing="false" onAction="#onHorizontalMenuButton" selected="true" text="Horizontal">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="dir" />
+                    </toggleGroup>
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="R" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator>
+                </RadioMenuItem>
+                <RadioMenuItem fx:id="vMenuButton" mnemonicParsing="false" onAction="#onVerticalMenuButton" text="Vertical" toggleGroup="$dir">
+               <accelerator>
+                  <KeyCodeCombination alt="UP" code="T" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+               </accelerator></RadioMenuItem>
+            </Menu>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem mnemonicParsing="false" onAction="#onAboutMenuButton" text="About">
+            <accelerator>
+               <KeyCodeCombination alt="UP" code="A" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+            </accelerator></MenuItem>
+        </Menu>
+    </MenuBar>
+    <AnchorPane prefHeight="69.0" prefWidth="640.0">
+        <Label layoutX="119.0" layoutY="5.0" prefHeight="72.0" prefWidth="402.0" text="Software for data encryption by rectangle stencil method of Kardano" textAlignment="CENTER" wrapText="true">
+            <font>
+                <Font name="Franklin Gothic Heavy" size="23.0" />
+            </font>
+        </Label>
+    </AnchorPane>
+    <BorderPane prefHeight="200.0" prefWidth="200.0">
+        <center>
+            <TitledPane animated="false" collapsible="false" prefHeight="172.0" prefWidth="640.0" text="Operations" BorderPane.alignment="CENTER">
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+                </padding>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="174.0" prefWidth="590.0">
+                    <padding>
+                        <Insets left="20.0" right="20.0" />
+                    </padding>
+                    <opaqueInsets>
+                        <Insets left="20.0" right="20.0" />
+                    </opaqueInsets>
+                    <ChoiceBox fx:id="operationChoose" layoutX="104.0" layoutY="70.0" prefWidth="150.0" AnchorPane.leftAnchor="75.0">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Encryption" />
+                                <String fx:value="Decryption" />
+                            </FXCollections>
+                        </items>
+                        <value>
+                            <String fx:value="Encryption" />
+                        </value>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </ChoiceBox>
+                    <Label layoutX="18.0" layoutY="74.0" text="Operation:" AnchorPane.leftAnchor="0.0">
+                        <opaqueInsets>
+                            <Insets />
+                        </opaqueInsets>
+                    </Label>
+                    <RadioButton fx:id="hRadioButton" layoutX="303.0" layoutY="74.0" mnemonicParsing="false" onAction="#setHDirection" selected="true" text="Horizontal direction">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="dir2" />
+                        </toggleGroup>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </RadioButton>
+                    <RadioButton fx:id="vRadioButton" layoutX="453.0" layoutY="74.0" mnemonicParsing="false" onAction="#setVDirection" text="Vertical direction" toggleGroup="$dir2">
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </RadioButton>
+                    <TextField fx:id="stencilPath" layoutX="95.0" layoutY="28.0" prefHeight="25.0" prefWidth="330.0" AnchorPane.leftAnchor="75.0" />
+                    <Label layoutX="18.0" layoutY="32.0" prefHeight="17.0" prefWidth="81.0" text="Stencil file:" />
+                    <Button layoutX="439.0" layoutY="28.0" mnemonicParsing="false" onAction="#onStencilChooseButton" prefHeight="25.0" prefWidth="70.0" text="Choose...">
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Button>
+                    <Button layoutX="520.0" layoutY="28.0" mnemonicParsing="false" onAction="#onNewStencilButton" prefHeight="25.0" prefWidth="59.0" text="New..." AnchorPane.leftAnchor="500.0">
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Button>
+                </AnchorPane>
+            </TitledPane>
+        </center>
+    </BorderPane>
+    <BorderPane prefHeight="200.0" prefWidth="200.0">
+        <center>
+            <TitledPane animated="false" collapsible="false" text="File" BorderPane.alignment="CENTER">
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" />
+                </padding>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="174.0" prefWidth="590.0">
+                    <padding>
+                        <Insets left="20.0" right="20.0" />
+                    </padding>
+                    <TextField fx:id="filePath" layoutX="125.0" layoutY="21.0" prefHeight="25.0" prefWidth="330.0" AnchorPane.leftAnchor="75.0" />
+                    <Label layoutX="34.0" layoutY="25.0" prefHeight="17.0" prefWidth="69.0" text="Encryp file:" AnchorPane.leftAnchor="0.0" />
+                    <Button layoutX="193.0" layoutY="66.0" mnemonicParsing="false" onAction="#onGoButton" prefHeight="50.0" prefWidth="212.0" text="Go">
+                        <font>
+                            <Font size="18.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Button>
+                    <Button layoutX="439.0" layoutY="21.0" mnemonicParsing="false" onAction="#onFileChooseButton" prefHeight="25.0" prefWidth="141.0" text="Choose..." />
+                </AnchorPane>
+            </TitledPane>
+        </center>
+    </BorderPane>
+</VBox>
