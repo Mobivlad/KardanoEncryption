@@ -217,6 +217,14 @@ public class MainController {
             alert.showAndWait();
             return;
         }
+        if(!AlgoFunc.checkStencil(stencil)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Encryption operation");
+            alert.setHeaderText("Error in stencil file.");
+            alert.setContentText("Stencil file is incorrect. Check stencil validation or choose other.");
+            alert.showAndWait();
+            return;
+        }
         String text="";
         try {
             text = new String ( Files.readAllBytes( Paths.get(filePathText) ) );
@@ -241,6 +249,9 @@ public class MainController {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Text files", "*.txt"));
         File selectedFile = fileChooser.showSaveDialog(getCurrentStage());
+        if(selectedFile==null){
+            return;
+        }
         try {
             FileWriter fw = new FileWriter(selectedFile);
             fw.write(s);
