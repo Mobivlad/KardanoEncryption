@@ -110,7 +110,7 @@
                             <Insets />
                         </opaqueInsets>
                     </Label>
-                    <RadioButton fx:id="hRadioButton" layoutX="303.0" layoutY="74.0" mnemonicParsing="false" onAction="#setHDirection" selected="true" text="Horizontal direction">
+                    <RadioButton fx:id="hRadioButton" layoutX="260.0" layoutY="74.0" mnemonicParsing="false" onAction="#setHDirection" selected="true" text="Horizontal direction">
                         <toggleGroup>
                             <ToggleGroup fx:id="dir2" />
                         </toggleGroup>
@@ -118,7 +118,7 @@
                             <Cursor fx:constant="HAND" />
                         </cursor>
                     </RadioButton>
-                    <RadioButton fx:id="vRadioButton" layoutX="453.0" layoutY="74.0" mnemonicParsing="false" onAction="#setVDirection" text="Vertical direction" toggleGroup="$dir2">
+                    <RadioButton fx:id="vRadioButton" layoutX="398.0" layoutY="74.0" mnemonicParsing="false" onAction="#setVDirection" text="Vertical direction" toggleGroup="$dir2">
                         <cursor>
                             <Cursor fx:constant="HAND" />
                         </cursor>
@@ -135,6 +135,7 @@
                             <Cursor fx:constant="HAND" />
                         </cursor>
                     </Button>
+               <Button layoutX="520.0" layoutY="70.0" mnemonicParsing="false" onAction="#onShowButtonClick" prefHeight="25.0" prefWidth="59.0" text="Show..." />
                 </AnchorPane>
             </TitledPane>
         </center>

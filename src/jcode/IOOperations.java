@@ -28,6 +28,7 @@ public class IOOperations {
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
+            return 1;
         }
         return 0;
     }

@@ -190,6 +190,61 @@ public class MainController {
         return selectedFile.getAbsolutePath();
     }
 
+    @FXML
+    void onShowButtonClick() throws IOException{
+        //
+        Matrix stencil=null;
+        try{
+            stencil = IOOperations.readFromFile(stencilPath.getText());
+        } catch (FileNotFoundException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Encryption operation");
+            alert.setHeaderText("Can't find a file.");
+            alert.setContentText("Stencil file is open or don't exist.");
+            alert.showAndWait();
+            return;
+        } catch (IOException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Encryption operation");
+            alert.setHeaderText("Can't read stencil file.");
+            alert.setContentText("Check stencil file correction or change stencil file.");
+            alert.showAndWait();
+            return;
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Encryption operation");
+            alert.setHeaderText("Error in stencil reading process.");
+            alert.setContentText("Check stencil file correction or change stencil file.");
+            alert.showAndWait();
+            return;
+        }
+        if(!AlgoFunc.checkStencil(stencil)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Encryption operation");
+            alert.setHeaderText("Error in stencil file.");
+            alert.setContentText("Stencil file is incorrect. Check stencil validation or choose other.");
+            alert.showAndWait();
+            return;
+        }
+        boolean en = operationChoose.getValue().equals("Encryption");
+        boolean direction = ((RadioButton)(dir2.getSelectedToggle())).getText().equals("Vertical");
+        //
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ui/fxml/stencil.fxml"));
+        Parent root = fxmlLoader.load();
+        StencilViewController gc = fxmlLoader.getController();
+        gc.setData(stencil,direction,en);
+        for (String x: new String[]{"16","32","64","128","256","512"}) {
+            stage.getIcons().add(new Image(pathStartIcon+x+".png"));
+        }
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setOpacity(1);
+        stage.setResizable(false);
+        stage.setTitle("Algorithm's matrix view");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+    }
+
     void goFunction(AlgoModel am,String stencilPathText,String filePathText){
         boolean direction = ((RadioButton)(dir2.getSelectedToggle())).getText().equals("Vertical");
         Matrix stencil=null;
@@ -198,7 +253,7 @@ public class MainController {
         } catch (FileNotFoundException e){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Encryption operation");
-            alert.setHeaderText("Can't find an file.");
+            alert.setHeaderText("Can't find a file.");
             alert.setContentText("Stencil file is open or don't exist.");
             alert.showAndWait();
             return;

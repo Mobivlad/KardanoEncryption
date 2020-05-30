@@ -44,8 +44,8 @@ public class GeneratorController {
             if(IOOperations.writeToFile(x,s)!=0){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Operation error");
-                alert.setHeaderText("Stensil generation operation");
-                alert.setContentText("Stansil generation error.");
+                alert.setHeaderText("Stencil generation operation");
+                alert.setContentText("Stencil generation error.");
                 alert.showAndWait();
                 return;
             };
@@ -55,8 +55,8 @@ public class GeneratorController {
         mc.stencilPath.setText(selectedFile.getAbsolutePath());
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
-        alert.setHeaderText("Stensil generation operation");
-        alert.setContentText("Stansil generated.");
+        alert.setHeaderText("Stencil generation operation");
+        alert.setContentText("Stencil generated.");
         alert.showAndWait();
         getCurrentStage().close();
     }
