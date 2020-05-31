@@ -26,6 +26,13 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        try {
+            SQLAccessor sql = new SQLAccessor();
+            sql.createTables();
+            sql.finish();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         launch(args);
     }
 

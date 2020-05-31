@@ -82,7 +82,7 @@
     </AnchorPane>
     <BorderPane prefHeight="453.0" prefWidth="640.0">
       <center>
-         <Accordion prefHeight="296.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <Accordion prefHeight="296.0" prefWidth="600.0" expandedPane="$text_pane" BorderPane.alignment="CENTER">
            <panes>
              <TitledPane fx:id="text_pane" prefHeight="275.0" prefWidth="600.0" text="Text encryption">
                <content>
@@ -144,7 +144,7 @@
                     <opaqueInsets>
                         <Insets left="20.0" right="20.0" />
                     </opaqueInsets>
-                    <ChoiceBox fx:id="operationChoose" layoutX="104.0" layoutY="70.0" prefWidth="150.0" AnchorPane.leftAnchor="75.0">
+                    <ChoiceBox fx:id="operationChoose" layoutX="135.0" layoutY="63.0" prefWidth="150.0" AnchorPane.leftAnchor="75.0">
                         <items>
                             <FXCollections fx:factory="observableArrayList">
                                 <String fx:value="Encryption" />
@@ -158,12 +158,12 @@
                             <Cursor fx:constant="HAND" />
                         </cursor>
                     </ChoiceBox>
-                    <Label layoutX="18.0" layoutY="74.0" text="Operation:" AnchorPane.leftAnchor="0.0">
+                    <Label layoutX="60.0" layoutY="67.0" text="Operation:" AnchorPane.leftAnchor="0.0">
                         <opaqueInsets>
                             <Insets />
                         </opaqueInsets>
                     </Label>
-                    <RadioButton fx:id="hRadioButton" layoutX="260.0" layoutY="74.0" mnemonicParsing="false" onAction="#setHDirection" selected="true" text="Horizontal direction">
+                    <RadioButton fx:id="hRadioButton" layoutX="280.0" layoutY="56.0" mnemonicParsing="false" onAction="#setHDirection" selected="true" text="Horizontal direction">
                         <toggleGroup>
                             <ToggleGroup fx:id="dir2" />
                         </toggleGroup>
@@ -171,7 +171,7 @@
                             <Cursor fx:constant="HAND" />
                         </cursor>
                     </RadioButton>
-                    <RadioButton fx:id="vRadioButton" layoutX="398.0" layoutY="74.0" mnemonicParsing="false" onAction="#setVDirection" text="Vertical direction" toggleGroup="$dir2">
+                    <RadioButton fx:id="vRadioButton" layoutX="280.0" layoutY="77.0" mnemonicParsing="false" onAction="#setVDirection" text="Vertical direction" toggleGroup="$dir2">
                         <cursor>
                             <Cursor fx:constant="HAND" />
                         </cursor>
@@ -188,7 +188,8 @@
                             <Cursor fx:constant="HAND" />
                         </cursor>
                     </Button>
-               <Button layoutX="520.0" layoutY="70.0" mnemonicParsing="false" onAction="#onShowButtonClick" prefHeight="25.0" prefWidth="65.0" text="Show..." />
+               <Button layoutX="520.0" layoutY="63.0" mnemonicParsing="false" onAction="#onShowButtonClick" prefHeight="25.0" prefWidth="65.0" text="Show..." />
+               <Button layoutX="439.0" layoutY="63.0" mnemonicParsing="false" onAction="#onDBclick" prefHeight="25.0" prefWidth="70.0" text="From DB..." />
                 </AnchorPane>
             <BorderPane.margin>
                <Insets left="20.0" right="20.0" />

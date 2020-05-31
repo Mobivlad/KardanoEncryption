@@ -9,11 +9,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-
-import java.io.IOException;
-import java.util.List;
-import java.util.logging.Level;
-
 public class StencilViewController {
     @FXML
     GridPane grid1;
@@ -50,7 +45,6 @@ public class StencilViewController {
         gridColumns.clear();
         for(int i=0;i<stencil.m;i++){
             gridColumns.add(new ColumnConstraints(w));
-
         }
         ObservableList<RowConstraints> gridRows = grid1.getRowConstraints();
         gridRows.clear();
@@ -72,6 +66,7 @@ public class StencilViewController {
                 if(stencil.getElement(i,j)==1)grid1.add(l,j,i);
             }
         }
+        stencil.print(true);
         Matrix m = AlgoFunc.fillMatrixByRotating(stencil,dir);
         int count4 = stencil.n*stencil.m/4;
         Background background1 = new Background(new BackgroundFill(Color.CYAN, CornerRadii.EMPTY, Insets.EMPTY));
@@ -103,6 +98,8 @@ public class StencilViewController {
                 fill_grid.add(l,j,i);
             }
         }
+        System.out.println();
+        m.print(false);
         Matrix enMatrix = process?AlgoFunc.getEncryptMatrix(m):AlgoFunc.getDecryptMatrix(m);
         int _w = (int) (en_grid.getPrefWidth()/(enMatrix.m+1));
         en_grid.setPrefWidth(_w*(enMatrix.m+1));
