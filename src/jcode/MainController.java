@@ -6,16 +6,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
 
-public class MainController {
+public class MainController{
     private static final String pathStartIcon = "/ui/img/icons/icon_";
     private boolean dialogRes = false;
 
@@ -39,6 +45,15 @@ public class MainController {
 
     @FXML
     TextField filePath;
+
+    @FXML
+    TitledPane tpane;
+
+    @FXML
+    TextArea plainTextField;
+
+    @FXML
+    TextArea chiperTextField;
 
     @FXML
     ChoiceBox<String> operationChoose;
@@ -298,7 +313,26 @@ public class MainController {
             alert.showAndWait();
             return;
         }
-        String s = am.getAlgoRes(text,stencil,direction);
+        String s="";
+        try{
+           s = am.getAlgoRes(text,stencil,direction,true);
+        } catch (AlgorithmException e) {
+            ButtonType foo = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+            ButtonType bar = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    "Chipertext can be incorrect. Do you want to continue a decryption?", foo, bar);
+            alert.setTitle("Decryption warning");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.orElse(bar) == foo) {
+                try {
+                    s = am.getAlgoRes(text,stencil,direction,false);
+                } catch (AlgorithmException algorithmException) {
+                    algorithmException.printStackTrace();
+                }
+            } else {
+                return;
+            }
+        }
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save result file as");
         fileChooser.getExtensionFilters().addAll(
@@ -321,7 +355,136 @@ public class MainController {
         alert.showAndWait();
     }
 
+    @FXML
+    void onCopyButton(){
+        String myString = chiperTextField.getText();
+        StringSelection stringSelection = new StringSelection(myString);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+    }
+
+    @FXML
+    void onSaveAsButton(){
+        if(chiperTextField.getText().isEmpty()){
+            ButtonType foo = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+            ButtonType bar = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Chipertext field is empty, so saved file will be empty.\n Do you want to continue?", foo, bar);
+            alert.setTitle("Save file operation");
+            alert.setHeaderText("Empty text field.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.orElse(bar) != foo) {
+                return;
+            }
+        }
+        String s = chiperTextField.getText();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save result file as");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text files", "*.txt"));
+        File selectedFile = fileChooser.showSaveDialog(getCurrentStage());
+        if(selectedFile==null){
+            return;
+        }
+        try {
+            FileWriter fw = new FileWriter(selectedFile);
+            fw.write(s);
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText("Operation done.");
+        alert.setContentText("Text was "+ ((RadioButton)(dir2.getSelectedToggle())).getText().toLowerCase() +"ed!");
+        alert.showAndWait();
+    }
+
+    @FXML
+    void onTextGoButton(){
+        if(stencilPath.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText("Choose a stencil file.");
+            alert.setContentText("Stencil file path is empty. Choose stencil file.");
+            alert.showAndWait();
+            return;
+        }
+        AlgoModel am;
+        if(operationChoose.getValue().equals("Encryption")){
+            System.out.println("e");
+            am = new EncryptModel();
+        } else {
+            System.out.println("d");
+            am = new DecryptModel();
+        }
+        String stencilPathText = stencilPath.getText();
+        boolean direction = ((RadioButton)(dir2.getSelectedToggle())).getText().equals("Vertical");
+        Matrix stencil=null;
+        try{
+            stencil = IOOperations.readFromFile(stencilPathText);
+        } catch (FileNotFoundException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Encryption operation");
+            alert.setHeaderText("Can't find a file.");
+            alert.setContentText("Stencil file is open or don't exist.");
+            alert.showAndWait();
+            return;
+        } catch (IOException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Encryption operation");
+            alert.setHeaderText("Can't read stencil file.");
+            alert.setContentText("Check stencil file correction or change stencil file.");
+            alert.showAndWait();
+            return;
+        } catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Encryption operation");
+            alert.setHeaderText("Error in stencil reading process.");
+            alert.setContentText("Check stencil file correction or change stencil file.");
+            alert.showAndWait();
+            return;
+        }
+        if(!AlgoFunc.checkStencil(stencil)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Encryption operation");
+            alert.setHeaderText("Error in stencil file.");
+            alert.setContentText("Stencil file is incorrect. Check stencil validation or choose other.");
+            alert.showAndWait();
+            return;
+        }
+        String text=plainTextField.getText();
+        String s="";
+        try{
+            s = am.getAlgoRes(text,stencil,direction,true);
+        } catch (AlgorithmException e) {
+            ButtonType foo = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+            ButtonType bar = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+            Alert alert = new Alert(Alert.AlertType.WARNING,
+                    "Chipertext can be incorrect. Do you want to continue a decryption?", foo, bar);
+            alert.setTitle("Decryption warning");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.orElse(bar) == foo) {
+                try {
+                    s = am.getAlgoRes(text,stencil,direction,false);
+                } catch (AlgorithmException algorithmException) {
+                    algorithmException.printStackTrace();
+                }
+            } else {
+                return;
+            }
+        }
+        chiperTextField.setText(s);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText("Operation done.");
+        alert.setContentText("Text was "+ ((RadioButton)(dir2.getSelectedToggle())).getText().toLowerCase() +"ed!");
+        alert.showAndWait();
+    }
+
     public void setDialogRes(boolean res){
         dialogRes = res;
     }
+
+
 }

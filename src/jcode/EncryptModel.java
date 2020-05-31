@@ -2,11 +2,11 @@ package jcode;
 
 public class EncryptModel extends AlgoModel{
     @Override
-    public String getAlgoRes(String s, Matrix stencil,boolean vertical){
-        return encrypt(s,stencil,vertical);
+    public String getAlgoRes(String s, Matrix stencil,boolean vertical,boolean useException) throws AlgorithmException{
+        return encrypt(s,stencil,vertical,useException);
     }
 
-    private String encrypt(String s, Matrix stencil,boolean vertical){
+    private String encrypt(String s, Matrix stencil,boolean vertical,boolean useException) throws AlgorithmException{
         Matrix _matrix;
         if(vertical){
             _matrix = AlgoFunc.fillMatrixByRotating(stencil,true);

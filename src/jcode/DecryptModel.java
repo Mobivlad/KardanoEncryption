@@ -2,11 +2,14 @@ package jcode;
 
 public class DecryptModel extends AlgoModel{
     @Override
-    public String getAlgoRes(String s, Matrix stencil,boolean vertical){
-        return decrypt(s,stencil,vertical);
+    public String getAlgoRes(String s, Matrix stencil,boolean vertical,boolean useException) throws AlgorithmException{
+        return decrypt(s,stencil,vertical,useException);
     }
 
-    private String decrypt(String s, Matrix stencil,boolean vertical){
+    private String decrypt(String s, Matrix stencil,boolean vertical,boolean useException) throws AlgorithmException{
+        if(s.length()%(stencil.n*stencil.m)!=0 && useException){
+            throw new AlgorithmException();
+        }
         Matrix _matrix;
         if(vertical){
             _matrix = AlgoFunc.fillMatrixByRotating(stencil,true);

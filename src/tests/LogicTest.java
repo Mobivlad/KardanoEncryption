@@ -13,7 +13,7 @@ public class LogicTest {
         try {
             Matrix stencil = AlgoFunc.generateStencil(4,8);
             String in = "Abcdefghijklmnopqrstuvwxyzabcdef";
-            String out = new DecryptModel().getAlgoRes(new EncryptModel().getAlgoRes(in,stencil,true),stencil,true);
+            String out = new DecryptModel().getAlgoRes(new EncryptModel().getAlgoRes(in,stencil,true,false),stencil,true,false);
             Assert.assertEquals(in,out);
         } catch (Exception e) {
             e.printStackTrace();
@@ -25,7 +25,7 @@ public class LogicTest {
         try {
             Matrix stencil = AlgoFunc.generateStencil(4,8);
             String in = "Abcdefghijklmnopqrstuv";
-            String out = new DecryptModel().getAlgoRes(new EncryptModel().getAlgoRes(in,stencil,true),stencil,true);
+            String out = new DecryptModel().getAlgoRes(new EncryptModel().getAlgoRes(in,stencil,true,false),stencil,true,false);
             Assert.assertFalse(out.indexOf(in)==-1);
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class LogicTest {
         try {
             Matrix stencil = AlgoFunc.generateStencil(4,8);
             String in = "AbcdefghijklmnopqrstuvwxyzabcdeffedcbazyxwvutsrqponmlkjihgfedcbA";
-            String out = new DecryptModel().getAlgoRes(new EncryptModel().getAlgoRes(in,stencil,true),stencil,true);
+            String out = new DecryptModel().getAlgoRes(new EncryptModel().getAlgoRes(in,stencil,true,false),stencil,true,false);
             Assert.assertEquals(in,out);
         } catch (Exception e) {
             e.printStackTrace();

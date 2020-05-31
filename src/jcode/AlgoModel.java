@@ -1,8 +1,7 @@
 package jcode;
 
 public abstract class AlgoModel {
-    abstract String getAlgoRes(String s,Matrix stencil,boolean vertical);
-
+    abstract String getAlgoRes(String s,Matrix stencil,boolean vertical,boolean useException) throws AlgorithmException;
     protected final String toString(Matrix m,int len){
         int _n=m.n;
         int _m=m.m;
